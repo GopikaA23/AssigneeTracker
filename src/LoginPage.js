@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Button, IconButton, InputAdornment, Stack, TextField } from "@mui/material";
+import MainPage from "./MainPage";
 
 const Loginpage = () => {
   const [name,setName] = useState("");
@@ -41,12 +42,12 @@ const Loginpage = () => {
 
   return (
     <div>
-      <Stack direction="column">
+      <Stack direction="column" spacing={2} sx={{width: 300}}>
      <TextField 
        label="Name" 
        type="text"
        value={name}
-       variant="filled"
+       variant="outlined"
        onChange={handleNameChange}
      /> 
 
@@ -54,7 +55,7 @@ const Loginpage = () => {
        label="Password"
        type={showPassword ? "text" : "password"}
        value={password} 
-       variant="filled"
+       variant="outlined"
        onChange={handlePasswordChange}
        error={!!passwordErrorMsg}
        helperText={passwordErrorMsg}
@@ -74,7 +75,8 @@ const Loginpage = () => {
        }}
       />  
 
-      <Button onClick={handleSubmitBtnClick}>Submit</Button>
+      <Button onClick={handleSubmitBtnClick} variant="text" sx={{width:150} }>Submit</Button>
+      {isSubmitted && <MainPage/>}
       </Stack>
     </div>
   )
