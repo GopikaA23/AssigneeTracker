@@ -16,10 +16,8 @@ const AssigneePage = () => {
     const updatedAssignees = [...assignees, { id: idCounter, ...newAssignee }];
     setAssignees(updatedAssignees);
     setIdCounter(idCounter + 1);
-    setIsAddBtnClicked(false);
+    setIsAddBtnClicked(false); 
   }
-
-  console.log("Assigneepage", assignees)
 
   return (
     <div>
@@ -47,7 +45,6 @@ const AssigneePage = () => {
           </TableBody>
         </Table>
       </TableContainer>
-
       <div style={{ position: "fixed", bottom: "550px", right: "20px" }}>
         <Button 
           component={Link} 
@@ -60,10 +57,11 @@ const AssigneePage = () => {
           Add 
         </Button>
       </div>
-
       </>
       ) : (
+        <>
         <AddAssignee addAssignee={addAssignee} setIsAddBtnClicked={setIsAddBtnClicked} />
+      </>
       )}
     </div>
   )

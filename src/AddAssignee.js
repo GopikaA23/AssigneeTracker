@@ -39,9 +39,9 @@ const AddAssignee = ({ addAssignee }) => {
             onChange={(e) => setPhonenum(e.target.value)}
           />
 
-          {!isFormValid && <p style={{ color: 'red' }}>Please fill all the details</p>} {/* Error message */}
+        {!isFormValid && <p style={{ color: 'red' }}>Please fill all the details</p>} {/* Error message */}
 
-          <Button type="submit" variant="outlined" color="primary" sx={{width: 100}} >Submit</Button>
+        <Button type="submit" variant="outlined" color="primary" sx={{width: 100}} >Submit</Button>
         </Stack>
       </form>
     </div>

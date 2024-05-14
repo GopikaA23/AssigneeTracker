@@ -10,7 +10,7 @@ const AddTodoItem = ({ addTodoItem, assignees }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (title.trim() !== "" && description.trim() !== "" && person.trim() !== "") {
+    if (title.trim() !== "" && description.trim() !== "" ) {
       addTodoItem({ title, description, person });
       // Reset values
       setTitle("");
