@@ -1,12 +1,19 @@
-import './App.css';
-import Loginpage from './LoginPage';
+import React, { useState } from "react";
+import LoginPage from "./LoginPage";
+import MainPage from "./MainPage";
 
-function App() {
+const App = () => {
+  const [isLogin, setIsLogin] = useState(false);
+
   return (
-    <div className="App">
-      <Loginpage/>
+    <div>
+      {isLogin ? (
+        <MainPage setIsLogin={setIsLogin} />
+      ) : (
+        <LoginPage setIsLogin={setIsLogin} />
+      )}
     </div>
   );
-}
+};
 
 export default App;

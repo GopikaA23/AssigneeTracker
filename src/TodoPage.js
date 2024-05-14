@@ -1,32 +1,62 @@
-import { Button, Link, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import React, { useState } from "react";
+import { Button, Link, Card, CardContent, Typography, Box } from "@mui/material";
 import AddTodoItem from "./AddTodoItems";
 
 const TodoPage = () => {
   const [isAddClicked, setIsAddClicked] = useState(false);
+  const [todoItems, setTodoItems] = useState([]);
 
   const handleAddBtnClick = () => {
-    setIsAddClicked(!isAddClicked);
+    setIsAddClicked(true);
+  }
+
+  const addTodoItem = (newTodoItem) => {
+    setTodoItems([...todoItems, newTodoItem]);
+    setIsAddClicked(false);
   }
 
   return (
-   <div>
-    <TableContainer>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Title</TableCell>
-            <TableCell>Description</TableCell>
-            <TableCell>Person</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-        </TableBody>
-      </Table>
-    </TableContainer>
-    <Button LinkComponent={Link} to="/add-page" variant="outlined" color="primary" onClick={handleAddBtnClick}>Add</Button>
-    {isAddClicked && <AddTodoItem/>}
-   </div>
+    <div>
+      {!isAddClicked ? (
+        <>
+          <div style={{ maxWidth: "600px", margin: "0 auto" }}> 
+            {todoItems.map((item, index) => (
+              <Box key={index} sx={{ marginBottom: 2 }}>
+                <Card variant="outlined">
+                  <CardContent>
+                    <Typography variant="h5" component="div">
+                      {item.title}
+                    </Typography>
+                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                      {item.description}
+                    </Typography>
+                    <Typography variant="body2">
+                      Assigned to: {item.person}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Box>
+            ))}
+          </div>
+
+          <div style={{ position: "fixed", bottom: "550px", right: "20px" }}>
+            <Button 
+              LinkComponent={Link} 
+              to="/add-page" 
+              sx={{width: 92}}
+              variant="outlined" 
+              color="primary" 
+              onClick={handleAddBtnClick} 
+              size="large"
+            >
+              Add
+            </Button>
+          </div>
+        </>
+      ) : (
+        <AddTodoItem addTodoItem={addTodoItem} setIsAddClicked={setIsAddClicked} />
+      )}
+    </div>
   )
 }
 
