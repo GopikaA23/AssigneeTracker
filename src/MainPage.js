@@ -16,14 +16,24 @@ const MainPage = ({ setIsLogin }) => {
 
   return (
     <div>
-      <Stack direction="row">
-        <Button onClick={() => handlePageChange('todo')}>Todo</Button>
-        <Button onClick={() => handlePageChange('people')}>People</Button>
-
-        <div style={{ position: "fixed", bottom: "620px", right: "20px" }}>
-        <Button onClick={handleLogoutBtn} variant="contained">Logout</Button>
-        </div>
-
+      <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{marginTop: 1}}>
+        <Stack direction="row" spacing={2} sx={{marginLeft:2}}>
+          <Button
+            onClick={() => handlePageChange('todo')}
+            variant={activePage === 'todo' ? "contained" : "text"} 
+            color={activePage === 'todo' ? "primary" : "inherit"} 
+          >
+            Todo
+          </Button>
+          <Button
+            onClick={() => handlePageChange('people')}
+            variant={activePage === 'people' ? "contained" : "text"} 
+            color={activePage === 'people' ? "primary" : "inherit"}
+          >
+            People
+          </Button>
+        </Stack>
+        <Button onClick={handleLogoutBtn} variant="contained" sx={{marginRight:2}}>Logout</Button>
       </Stack>
 
       {activePage === 'todo' && <TodoPage />}

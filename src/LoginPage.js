@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { Button, IconButton, InputAdornment, Stack, TextField } from "@mui/material";
+import { Button, IconButton, InputAdornment, Stack, TextField, Typography } from "@mui/material";
+import People from "./People.json"; // Importing People.json
 
 const LoginPage = ({ setIsLogin }) => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordErrorMsg, setPasswordErrorMsg] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(""); // State for error message
+  
+  const isLoginDisabled = name.trim() === '' || password.trim() === ''; //used to determine if login button should be disabled or not.
 
   const handleNameChange = (event) => {
     const newName = event.target.value;
@@ -35,14 +39,21 @@ const LoginPage = ({ setIsLogin }) => {
 
   const handleSubmitBtnClick = () => {
     if (name.trim() === '' || password.trim() === '') {
-      alert('Please fill in all fields');
+      setErrorMsg('Please fill in all fields');
       return;
     }
-    setIsLogin(true);
+
+    // Check if the username and password match People.json
+    const user = People.find((person) => person.Name === name && person.Password === password);
+    if (user) {
+      setIsLogin(true);
+    } else {
+      setErrorMsg('Unauthorized user');
+    }
   }
 
   return (
-    <div style={{ marginTop: "60px", width: "100%", display: "flex", justifyContent: "center"  }}>
+    <div style={{ marginTop: "60px", width: "100%", display: "flex", justifyContent: "center" }}>
       <Stack direction="column" spacing={2} sx={{ width: 300 }}>
         <TextField
           label="Name"
@@ -76,7 +87,16 @@ const LoginPage = ({ setIsLogin }) => {
           }}
         />
 
-        <Button onClick={handleSubmitBtnClick} variant="outlined" sx={{ width: 150 }}>Submit</Button>
+        <Button 
+          onClick={handleSubmitBtnClick} 
+          variant="outlined" 
+          sx={{ width: 150 }}
+          disabled={isLoginDisabled}
+        >
+          Login
+        </Button>
+
+        {errorMsg && <Typography color="error">{errorMsg}</Typography>} {/* Display error message */}
       </Stack>
     </div>
   )

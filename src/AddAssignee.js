@@ -6,10 +6,15 @@ const AddAssignee = ({ addAssignee }) => {
   const [phonenum, setPhonenum] = useState("");
   const [isFormValid, setIsFormValid] = useState(true);
 
+  const isSubmitDisabled = name.trim() === "" || phonenum.trim() === "";
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (name.trim() !== "" && phonenum.trim() !== "") {
-      addAssignee({ name, phonenum });
+    const phoneNumberRegex = /^[0-9]{10}$/; // Regex to check phonenum
+
+    if (name.trim() !== "" && phonenum.trim() !== "" && phoneNumberRegex.test(phonenum)) {
+      const creationDate = new Date(); 
+      addAssignee({ name, phonenum, creationDate });
   
       // Reset values
       setName("");
@@ -39,9 +44,13 @@ const AddAssignee = ({ addAssignee }) => {
             onChange={(e) => setPhonenum(e.target.value)}
           />
 
-        {!isFormValid && <p style={{ color: 'red' }}>Please fill all the details</p>} {/* Error message */}
+        {!isFormValid && <p style={{ color: 'red' }}>
+          {phonenum.trim() === ""  || name.trim() === "" ? "Please fill all the details" : "Please enter a valid phone number"}
+        </p>} {/* Error message */}
 
-        <Button type="submit" variant="outlined" color="primary" sx={{width: 100}} >Submit</Button>
+        <Button type="submit" variant="outlined" color="primary" sx={{width: 100}} disabled={isSubmitDisabled}>
+          Submit
+        </Button>
         </Stack>
       </form>
     </div>
@@ -49,3 +58,4 @@ const AddAssignee = ({ addAssignee }) => {
 }
 
 export default AddAssignee;
+

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Link, Card, CardContent, Typography, Box } from "@mui/material";
+import _ from "lodash";
 import AddTodoItem from "./AddTodoItems";
 
 const TodoPage = () => {
@@ -11,6 +12,8 @@ const TodoPage = () => {
   }
 
   const addTodoItem = (newTodoItem) => {
+    const createdAt = new Date(); // Get current date and time
+    newTodoItem.createdAt = createdAt.toLocaleString(); 
     setTodoItems([...todoItems, newTodoItem]);
     setIsAddClicked(false);
   }
@@ -20,10 +23,13 @@ const TodoPage = () => {
       {!isAddClicked ? (
         <>
           <div style={{ maxWidth: "600px", margin: "0 auto" }}> 
-            {todoItems.map((item, index) => (
+            {_.map(todoItems,(item, index) => (
               <Box key={index} sx={{ marginBottom: 2 }}>
                 <Card variant="outlined">
                   <CardContent>
+                    <Typography variant="body2" color="text.secondary" style={{ textAlign: 'right' }}>
+                      Created at: {item.createdAt}
+                    </Typography>
                     <Typography variant="h5" component="div">
                       {item.title}
                     </Typography>
